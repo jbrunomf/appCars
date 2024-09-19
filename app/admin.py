@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Car
+from .models import Car, Brand
 
 
 # Register your models here.
@@ -11,3 +11,10 @@ class CarAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_max_show_all = 20
     sortable_by = ['model', 'brand', 'factory_year', 'model_year', 'value']
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+    search_fields = ['name']
+    list_filter = ['name']

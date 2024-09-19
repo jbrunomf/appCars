@@ -1,0 +1,9 @@
+{% extends 'app/base.html' %}
+
+{% block title %}<title>{{ title }}</title> {% endblock %}
+{% block content %}
+    <h1>Carros</h1>
+    {% for car in cars %}
+        <p>{{ car.model }}</p>
+    {% endfor %}
+{% endblock content %}
