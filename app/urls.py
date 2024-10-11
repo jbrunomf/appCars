@@ -23,5 +23,5 @@ from . import views
 from appCars import settings
 
 urlpatterns = [
-                  path('', views.cars_view, name='cars'),
+                  path('', views.cars_view, name='cars_list'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
