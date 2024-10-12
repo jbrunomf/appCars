@@ -37,3 +37,14 @@ class CarModelForm(forms.ModelForm):
             'value',
             'photo'
         )
+
+    def clean_model(self):
+        model = self.cleaned_data['model']
+        return model.upper()
+
+    def clean_value(self):
+        value = self.cleaned_data['value']
+
+        if value < 5000:
+            self.add_error('value', 'Vehicle price below the minimum value')
+        return value

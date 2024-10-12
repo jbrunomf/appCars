@@ -13,8 +13,8 @@ def cars_view(request):
     if search:
         cars = cars.filter(model__icontains=search)
 
-
     return render(request, 'app/list.html', context={"cars": cars, "title": "Carros"})
+
 
 def new_car(request):
     if request.method == 'POST':
