@@ -24,3 +24,16 @@ class CarForm(forms.Form):
         )
         car.save()
         return car
+
+class CarModelForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = (
+            'model',
+            'brand',
+            'factory_year',
+            'model_year',
+            'plate',
+            'value',
+            'photo'
+        )
