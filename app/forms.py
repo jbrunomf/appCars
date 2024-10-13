@@ -51,6 +51,6 @@ class CarModelForm(forms.ModelForm):
 
     def clean_factory_year(self):
         factory_year = self.cleaned_data['factory_year']
-        if factory_year < 2010:
+        if factory_year < 1950:
             self.add_error('factory_year', 'Vehicle factory year below the minimum value')
         return factory_year

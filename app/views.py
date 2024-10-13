@@ -4,6 +4,8 @@ from app.models import Car
 
 from .forms import CarForm, CarModelForm
 
+from django.views.generic import View
+
 
 def cars_view(request):
     cars = Car.objects.all()
@@ -14,6 +16,18 @@ def cars_view(request):
         cars = cars.filter(model__icontains=search)
 
     return render(request, 'app/list.html', context={"cars": cars, "title": "Carros"})
+
+
+class ListCarsView(View):
+    def get(self, request):
+        cars = Car.objects.all()
+
+        search = request.GET.get('search')
+
+        if search:
+            cars = cars.filter(model__icontains=search)
+
+        return render(request, 'app/list.html', context={"cars": cars, "title": "Carros"})
 
 
 def new_car(request):
@@ -28,3 +42,16 @@ def new_car(request):
         car_form = CarModelForm()
 
     return render(request, 'app/newcar.html', context={"title": "Novo Carro", 'form': car_form})
+
+
+class NewCarView(View):
+    def get(self, request):
+        car_form = CarModelForm()
+        return render(request, 'app/newcar.html', context={"title": "Novo Carro", 'form': car_form})
+
+    def post(self, request):
+        car_form = CarModelForm(request.POST, request.FILES)
+        if car_form.is_valid():
+            car_form.save()
+            return redirect('car_list')
+        return render(request, 'app/newcar.html', context={"title": "Novo Carro", 'form': car_form})
