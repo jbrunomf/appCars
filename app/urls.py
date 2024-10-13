@@ -14,8 +14,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from tkinter.font import names
-
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
@@ -23,6 +21,6 @@ from . import views
 from appCars import settings
 
 urlpatterns = [
-                  path('', views.ListCarsView.as_view(), name='car_list'),
-                  path('new', views.NewCarView.as_view(), name='car_create'),
+                  path('', views.CarsListView.as_view(), name='car_list'),
+                  path('new', views.CarCreateView.as_view(), name='car_create'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

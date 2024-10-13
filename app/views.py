@@ -2,46 +2,23 @@ from django.shortcuts import render, redirect
 
 from app.models import Car
 
-from .forms import CarForm, CarModelForm
+from .forms import CarModelForm
 
-from django.views.generic import View
-
-
-def cars_view(request):
-    cars = Car.objects.all()
-
-    search = request.GET.get('search')
-
-    if search:
-        cars = cars.filter(model__icontains=search)
-
-    return render(request, 'app/list.html', context={"cars": cars, "title": "Carros"})
+from django.views.generic import View, ListView, CreateView
 
 
-class ListCarsView(View):
-    def get(self, request):
-        cars = Car.objects.all()
+class CarsListView(ListView):
+    model = Car
+    template_name = 'app/list.html'
+    context_object_name = 'cars'
+    paginate_by = 10
 
-        search = request.GET.get('search')
-
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('model')
+        search = self.request.GET.get('search')
         if search:
-            cars = cars.filter(model__icontains=search)
-
-        return render(request, 'app/list.html', context={"cars": cars, "title": "Carros"})
-
-
-def new_car(request):
-    if request.method == 'POST':
-        car_form = CarModelForm(request.POST, request.FILES)
-
-        if car_form.is_valid():
-            car_form.save()
-            return redirect('car_list')
-
-    else:
-        car_form = CarModelForm()
-
-    return render(request, 'app/newcar.html', context={"title": "Novo Carro", 'form': car_form})
+            queryset = queryset.filter(model__icontains=search)
+        return queryset
 
 
 class NewCarView(View):
@@ -55,3 +32,10 @@ class NewCarView(View):
             car_form.save()
             return redirect('car_list')
         return render(request, 'app/newcar.html', context={"title": "Novo Carro", 'form': car_form})
+
+
+class CarCreateView(CreateView):
+    model = Car
+    form_class = CarModelForm
+    template_name = 'app/newcar.html'
+    success_url = '/cars/'
