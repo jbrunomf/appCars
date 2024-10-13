@@ -23,4 +23,6 @@ from appCars import settings
 urlpatterns = [
                   path('', views.CarsListView.as_view(), name='car_list'),
                   path('new', views.CarCreateView.as_view(), name='car_create'),
+                  path('<int:pk>', views.CarDetailView.as_view(), name='car_detail'),
+                  path('<int:pk>/update/', views.CarUpdateView.as_view(), name='car_update'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

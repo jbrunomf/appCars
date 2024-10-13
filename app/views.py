@@ -4,7 +4,7 @@ from app.models import Car
 
 from .forms import CarModelForm
 
-from django.views.generic import View, ListView, CreateView
+from django.views.generic import View, ListView, CreateView, DetailView, UpdateView
 
 
 class CarsListView(ListView):
@@ -38,4 +38,16 @@ class CarCreateView(CreateView):
     model = Car
     form_class = CarModelForm
     template_name = 'app/newcar.html'
+    success_url = '/cars/'
+
+class CarDetailView(DetailView):
+    model = Car
+    template_name = 'app/detail.html'
+    context_object_name = 'car'
+
+
+class CarUpdateView(UpdateView):
+    model = Car
+    form_class = CarModelForm
+    template_name = 'app/update.html'
     success_url = '/cars/'
