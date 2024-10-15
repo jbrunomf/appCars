@@ -35,7 +35,8 @@ class CarModelForm(forms.ModelForm):
             'model_year',
             'plate',
             'value',
-            'photo'
+            'photo',
+            'description'
         )
 
     def clean_model(self):

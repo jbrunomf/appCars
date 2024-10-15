@@ -14,7 +14,7 @@ class CarsListView(ListView):
     model = Car
     template_name = 'app/list.html'
     context_object_name = 'cars'
-    paginate_by = 10
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('model')
@@ -28,7 +28,7 @@ class CarsListView(ListView):
 class CarCreateView(CreateView):
     model = Car
     form_class = CarModelForm
-    template_name = 'app/newcar.html'
+    template_name = 'app/create.html'
     success_url = '/cars/'
 
 
