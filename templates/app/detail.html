@@ -90,6 +90,9 @@
             <p><strong>Placa:</strong> Informação não disponível</p>
         {% endif %}
         <p><strong>Preço:</strong> R$ {{ object.value }}</p>
+        {% if object.description %}
+            <p><strong>Descrição:</strong> {{ object.description }}</p>
+        {% endif %}
     </div>
     {% if request.user.is_authenticated %}
         <div class="buttons-container">

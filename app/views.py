@@ -28,7 +28,7 @@ class CarsListView(ListView):
 class CarCreateView(CreateView):
     model = Car
     form_class = CarModelForm
-    template_name = 'app/newcar.html'
+    template_name = 'app/create.html'
     success_url = '/cars/'
 
 

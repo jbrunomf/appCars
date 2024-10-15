@@ -7,8 +7,9 @@ from app.models import Car, CarInventory
 
 @receiver(pre_save, sender=Car)
 def pre_save_receiver(sender, instance, *args, **kwargs):
-    print("pre_save_receiver")
-    print(instance)
+    print('pre_save_receiver')
+    if not instance.description:
+        instance.description = 'Descrição não informada pelo anunciante.'
 
 
 @receiver(post_save, sender=Car)
