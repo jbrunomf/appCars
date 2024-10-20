@@ -1,15 +1,26 @@
+import os
+
 from django.db.models import Sum
 from django.db.models.signals import pre_save, pre_delete, post_save, post_delete
 from django.dispatch import receiver
 
 from app.models import Car, CarInventory
 
+from openai_api import client
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 @receiver(pre_save, sender=Car)
 def pre_save_receiver(sender, instance, *args, **kwargs):
-    print('pre_save_receiver')
-    if not instance.description:
-        instance.description = 'Descrição não informada pelo anunciante.'
+    if os.getenv('USE_OPENAPI_CAR_DESCRIPTION_GENERATOR') == True:
+        generated_ai_description = client.get_car_sale_description(instance.model, instance.brand, instance.model_year)
+        if not instance.description:
+            instance.description = generated_ai_description
+    else:
+        if not instance.description:
+            instance.description = 'Descrição não informada pelo vendedor.'
 
 
 @receiver(post_save, sender=Car)
